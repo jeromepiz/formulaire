@@ -21,41 +21,36 @@
 
       body {
         margin: 0;
-        background: #ffffff; /* fond neutre */
-      }
-
-      /* --- Mise en page principale ---------------------------------- */
-      .container {
-        min-height: 100vh;
+        background: #ffffff;
+        /* centre verticalement sur grands écrans */
         display: flex;
-        align-items: flex-start;
         justify-content: center;
-        gap: 2rem;
+        align-items: flex-start;
+        min-height: 100vh;
         padding: 2rem 1rem;
-        flex-wrap: wrap; /* passe verticalement si écran étroit */
       }
 
-      /* Illustration SAM */
-      .sam {
-        max-width: 340px; /* taille max */
-        width: 32vw;      /* taille réactive */
+      /* --- Conteneur principal (pile l'image puis le formulaire) ---- */
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 640px;
+      }
+
+      /* Illustration SAM au‑dessus */
+      .sam-top {
+        width: 220px; /* ajustable */
         height: auto;
-        flex-shrink: 0;   /* ne se rétrécit pas trop */
         user-select: none;
-      }
-
-      /* Cacher SAM sur mobile pour laisser la place au formulaire */
-      @media (max-width: 768px) {
-        .sam {
-          display: none;
-        }
       }
 
       /* Carte formulaire */
       .wrapper {
         background: var(--bg-overlay);
         width: 100%;
-        max-width: 640px;
         padding: 1.75rem 1.5rem;
         backdrop-filter: blur(4px);
         border-radius: var(--radius);
@@ -64,8 +59,7 @@
 
       h1 {
         font-size: 1.6rem;
-        margin-top: 0;
-        margin-bottom: 1rem;
+        margin: 0 0 1rem;
         text-align: center;
       }
 
@@ -114,12 +108,12 @@
 
   <body>
     <div class="container">
-      <!-- Illustration à gauche -->
-      <img src="sam-point-right.png" alt="Mascotte SAM pointant vers la droite" class="sam" />
+      <!-- Illustration SAM placée au‑dessus -->
+      <img src="sam-over.png" alt="SAM regarde le formulaire" class="sam-top" />
 
-      <!-- Formulaire -->
+      <!-- Formulaire encadré -->
       <div class="wrapper">
-        <h1>SAM se demande ....</h1>
+        <h1>Questionnaire hebdomadaire</h1>
         <form id="employee-survey">
           <!-- Identification du salarié -->
           <div class="question-block">
@@ -169,10 +163,8 @@
         try {
           await fetch(endpoint, {
             method: "POST",
-            mode: "no-cors", // évite la pré‑vérification CORS depuis GitHub Pages
-            headers: {
-              "Content-Type": "application/json",
-            },
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
 
